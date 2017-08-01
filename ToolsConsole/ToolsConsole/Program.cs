@@ -20,7 +20,7 @@ namespace ToolsConsole
         static void Test(string str)
         {
             //string result = Tools.StrClass.StrMid(str,5,7);
-            string result = Tools.StrClass.Anofollow(str); //Tools.StrClass.Length(str, 5, 7);
+            int result = Tools.QueryString.F("1").ToInt32(); //Tools.StrClass.Length(str, 5, 7);
             result.ToString();
         }
         

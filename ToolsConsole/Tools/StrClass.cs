@@ -4,6 +4,9 @@ using System.Text.RegularExpressions;
 
 namespace Tools
 {
+    /// <summary>
+    /// 一般的字符串操作
+    /// </summary>
     public static class StrClass
     {
         static void Main(string[] args)
@@ -140,10 +143,7 @@ namespace Tools
             _str = _str.Replace("0x", "０x");
             return _str;
         }
-
-
-
-
+          
         //static public string StrEn2(string str)
         //{
         //    if (str == null || str.Length == 0)
@@ -662,6 +662,48 @@ namespace Tools
             builder1.Replace("\r", "<br>");
             builder1.Replace(" ", "&nbsp;");
             return builder1.ToString();
+        }
+
+        /// <summary>
+        /// 截取字符串函数 
+        /// </summary>
+        /// <param name="strOriginal">字符串</param>
+        /// <param name="strFirst">起始字符</param>
+        /// <param name="strLast">结束字符</param>
+        /// <param name="t">0：不需要加起始和结束字符，1：相反</param>
+        /// <returns></returns>
+        public static string GetContent(string strOriginal, string strFirst, string strLast, string t)
+        {
+            if (string.IsNullOrEmpty(strOriginal) == true)
+            {
+                return "";
+            }
+            string s = "";
+            int t1, t2, t3;
+            if (t == "0")
+            {
+                string strOriginal1 = strOriginal, strFirst1 = strFirst, strLast1 = strLast;
+                t1 = strOriginal1.IndexOf(strFirst1);
+                if (t1 >= 0)
+                {
+                    t2 = strOriginal1.Length;
+                    t3 = t1 + strFirst1.Length;
+                    strOriginal1 = strOriginal1.Substring(t3);
+
+                    t1 = strOriginal1.IndexOf(strLast1);
+                    t3 = t1;
+                    if (t3 > 0)
+                    {
+                        s = strOriginal1.Substring(0, t3);
+                    }
+                }
+            }
+            else if (t == "1")
+            {
+                s = GetContent(strOriginal, strFirst, strLast, "0");
+                s = strFirst + s + strLast;
+            }
+            return s;
         }
     }
 }

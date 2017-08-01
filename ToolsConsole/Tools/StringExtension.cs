@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Tools
 {
+    /// <summary>
+    /// 字符串扩展方法
+    /// </summary>
     public static class StringExtension
     {
         public static DateTime FormatDateTime = DateTime.Parse("1900-01-01 00:00:00");
