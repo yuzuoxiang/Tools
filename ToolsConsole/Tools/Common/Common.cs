@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data;
+using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace Tools.Common
@@ -117,6 +119,7 @@ namespace Tools.Common
             }
         }
 
+        #region 加密
         /// <summary>
         /// 获取MD5加密字符串
         /// </summary>
@@ -135,6 +138,92 @@ namespace Tools.Common
             }
             return "00000000000000000000000000000000";
         }
+
+        static public string StrEn(string str)
+        {
+            if (str == null || str.Length == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return Des.Encrypt(str, "zuoxiang");
+            }
+        }
+
+        static public string StrDe(string str)
+        {
+
+
+            if (string.IsNullOrEmpty(str))
+            {
+                return string.Empty;
+            }
+            else
+            {
+                if (str.Length < 4)
+                {
+                    return string.Empty;
+                }
+
+                try
+                {
+                    return Des.Decrypt(str, "zuoxiang");
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+            }
+        }
+        //static public string StrEn2(string str)
+        //{
+        //    if (str == null || str.Length == 0)
+        //    {
+        //        return null;
+        //    }
+        //    else
+        //    {
+        //        str = str.Replace("[-efu-]", "");
+        //        return "[-efu-]" + Des2.SEncryptString(str, Des2.dkey);
+        //    }
+        //}
+
+        //static public string StrDe2(string str)
+        //{
+
+
+        //    if (string.IsNullOrEmpty(str))
+        //    {
+        //        return string.Empty;
+        //    }
+        //    else
+        //    {
+        //        if (str.Length < 4)
+        //        {
+        //            return string.Empty;
+        //        }
+
+        //        try
+        //        {
+        //            if (StrMid(str, 0, 7) == "[-efu-]")
+        //            {
+        //                str = StrMid(str, 7, str.Length);
+        //                return Des2.SDecryptString(str, Des2.dkey);
+        //            }
+        //            else
+        //            {
+        //                return str;
+        //            }
+
+        //        }
+        //        catch
+        //        {
+        //            return string.Empty;
+        //        }
+        //    }
+        //}
+        #endregion
 
         #region Cookie和Session
         public static string CC(string a, string b)
@@ -210,7 +299,7 @@ namespace Tools.Common
             return session == null ? "" : session.ToString();
         }
 
-        
+
         #endregion
 
 
@@ -232,5 +321,137 @@ namespace Tools.Common
 
             return userIP;
         }
+
+        /// <summary>
+        /// 获取时间戳
+        /// </summary>
+        public static string GetRandomTimeSpan()
+        {
+            TimeSpan ts = DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return Convert.ToInt64(ts.TotalSeconds).ToString();
+        }
+
+        #region 获得两个日期的间隔
+        /// <summary>
+        /// 获得两个日期的间隔
+        /// </summary>
+        /// <param name="DateTime1">日期一。</param>
+        /// <param name="DateTime2">日期二。</param>
+        /// <returns>日期间隔TimeSpan。</returns>
+        public static TimeSpan DateDiff(DateTime DateTime1, DateTime DateTime2)
+        {
+            TimeSpan ts1 = new TimeSpan(DateTime1.Ticks);
+            TimeSpan ts2 = new TimeSpan(DateTime2.Ticks);
+            TimeSpan ts = ts1.Subtract(ts2).Duration();
+            return ts;
+        }
+        #endregion
+
+        #region 得到随机日期
+        /// <summary>
+        /// 得到随机日期
+        /// </summary>
+        /// <param name="time1">起始日期</param>
+        /// <param name="time2">结束日期</param>
+        /// <returns>间隔日期之间的 随机日期</returns>
+        public static DateTime GetRandomTime(DateTime time1, DateTime time2)
+        {
+            Random random = new Random();
+            DateTime minTime = new DateTime();
+            DateTime maxTime = new DateTime();
+
+            System.TimeSpan ts = new System.TimeSpan(time1.Ticks - time2.Ticks);
+
+            // 获取两个时间相隔的秒数
+            double dTotalSecontds = ts.TotalSeconds;
+            int iTotalSecontds = 0;
+
+            if (dTotalSecontds > System.Int32.MaxValue)
+            {
+                iTotalSecontds = System.Int32.MaxValue;
+            }
+            else if (dTotalSecontds < System.Int32.MinValue)
+            {
+                iTotalSecontds = System.Int32.MinValue;
+            }
+            else
+            {
+                iTotalSecontds = (int)dTotalSecontds;
+            }
+
+            if (iTotalSecontds > 0)
+            {
+                minTime = time2;
+                maxTime = time1;
+            }
+            else if (iTotalSecontds < 0)
+            {
+                minTime = time1;
+                maxTime = time2;
+            }
+            else
+            {
+                return time1;
+            }
+
+            int maxValue = iTotalSecontds;
+
+            if (iTotalSecontds <= System.Int32.MinValue)
+                maxValue = System.Int32.MinValue + 1;
+
+            int i = random.Next(System.Math.Abs(maxValue));
+
+            return minTime.AddSeconds(i);
+        }
+        #endregion
+
+        #region 获得当前绝对路径
+        /// <summary>
+        /// 获得当前绝对路径
+        /// </summary>
+        /// <param name="strPath">指定的路径</param>
+        /// <returns>绝对路径</returns>
+        public static string GetMapPath(string strPath)
+        {
+            if (strPath.ToLower().StartsWith("http://"))
+            {
+                return strPath;
+            }
+            if (HttpContext.Current != null)
+            {
+                return HttpContext.Current.Server.MapPath(strPath);
+            }
+            else //非web程序引用
+            {
+                strPath = strPath.Replace("/", "\\");
+                if (strPath.StartsWith("\\"))
+                {
+                    strPath = strPath.Substring(strPath.IndexOf('\\', 1)).TrimStart('\\');
+                }
+                return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, strPath);
+            }
+        }
+        #endregion
+
+        #region  获取网页的HTML内容
+        // 获取网页的HTML内容，指定Encoding
+        public static string GetHtml(string url, Encoding encoding)
+        {
+            byte[] buf = new WebClient().DownloadData(url);
+            if (encoding != null) return encoding.GetString(buf);
+            string html = Encoding.UTF8.GetString(buf);
+            encoding = GetEncoding(html);
+            if (encoding == null || encoding == Encoding.UTF8) return html;
+            return encoding.GetString(buf);
+        }
+        // 根据网页的HTML内容提取网页的Encoding
+        public static Encoding GetEncoding(string html)
+        {
+            string pattern = @"(?i)\bcharset=(?<charset>[-a-zA-Z_0-9]+)";
+            string charset = Regex.Match(html, pattern).Groups["charset"].Value;
+            try { return Encoding.GetEncoding(charset); }
+            catch (ArgumentException) { return null; }
+        }
+        #endregion
     }
 }

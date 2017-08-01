@@ -49,9 +49,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CacheHelper.cs" />
+    <Compile Include="Common\ChineseCharactersToPinyin.cs" />
     <Compile Include="Common\Common.cs" />
+    <Compile Include="Common\Des.cs" />
+    <Compile Include="Common\ExportExcel.cs" />
     <Compile Include="Common\ImageTools.cs" />
     <Compile Include="Common\JsonHelper.cs" />
+    <Compile Include="FileClass.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="StringCheck.cs" />
     <Compile Include="Common\VerifyImage.cs" />
@@ -65,6 +70,7 @@
     <None Include="App.config" />
     <None Include="bin\Debug\Tools.exe.config" />
     <None Include="bin\Debug\Tools.vshost.exe.config" />
+    <Compile Include="JScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Debug\Newtonsoft.Json.dll" />
