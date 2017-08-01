@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Data;
 
 namespace Tools
 {
@@ -20,63 +19,51 @@ namespace Tools
         public static string Anofollow(string s1)
         {
             if (string.IsNullOrEmpty(s1))
-            {
-                return s1;
-            }
-            String p = @"(?s)<a[\s][^>]*href\s*=\s*[\""\']?(?<url>([^\""\'>\s]*))[\""\']?[^>]*>(?<title>([^<]+|.*?)?)</a\s*>";
-            return Regex.Replace(s1, p, "<a href=\"$1\" rel=\"nofollow\" target=\"_blank\">$2</a>", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+                return string.Empty;
+
+            string p = @"(?s)<a[\s][^>]*href\s*=\s*[\""\']?(?<url>([^\""\'>\s]*))[\""\']?[^>]*>(?<title>([^<]+|.*?)?)</a\s*>";
+            s1 = Regex.Replace(s1, p, "<a href=\"$1\" rel=\"nofollow\" target=\"_blank\">$2</a>", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            return s1;
         }
 
         static public string StrToHtml(string Readme)
         {
             if (string.IsNullOrEmpty(Readme))
-            {
                 return string.Empty;
-            }
-            else
-            {
-                Readme = Readme.Replace("<", "&lt;");
-                Readme = Readme.Replace(">", "&gt;");
-                Readme = Readme.Replace("\r\n", "<br>");
-                Readme = Readme.Replace("  ", "&nbsp;&nbsp;");
-                Readme = Readme.Replace("@", "&#64;");
-            }
+
+            Readme = Readme.Replace("<", "&lt;");
+            Readme = Readme.Replace(">", "&gt;");
+            Readme = Readme.Replace("\r\n", "<br>");
+            Readme = Readme.Replace("  ", "&nbsp;&nbsp;");
+            Readme = Readme.Replace("@", "&#64;");
             return Readme;
         }
 
         static public string HtmlToStr(string Readme)
         {
             if (string.IsNullOrEmpty(Readme))
-            {
                 return string.Empty;
-            }
-            else
-            {
-                Readme = Readme.Replace("&lt;", "<");
-                Readme = Readme.Replace("&gt;", ">");
-                Readme = Readme.Replace("<br>", "\r\n");
-                Readme = Readme.Replace("&nbsp;&nbsp;", "  ");
-                Readme = Readme.Replace("&#64;", "@");
-            }
+
+            Readme = Readme.Replace("&lt;", "<");
+            Readme = Readme.Replace("&gt;", ">");
+            Readme = Readme.Replace("<br>", "\r\n");
+            Readme = Readme.Replace("&nbsp;&nbsp;", "  ");
+            Readme = Readme.Replace("&#64;", "@");
             return Readme;
         }
 
         static public string RepEnter(string Temp_str)
         {
             if (string.IsNullOrEmpty(Temp_str))
-            {
                 return string.Empty;
-            }
-            else
-            {
-                Temp_str = Temp_str.Replace("\"", "'");
-                Temp_str = Temp_str.Replace(">", "&gt;");
-                Temp_str = Temp_str.Replace("<", "&lt;");
-                Temp_str = Temp_str.Replace("\n", "");
-                Temp_str = Temp_str.Replace("\r", "");
-                Temp_str = Temp_str.Replace("\t", "");
-                Temp_str = Temp_str.Replace("@", "&#64;");
-            }
+
+            Temp_str = Temp_str.Replace("\"", "'");
+            Temp_str = Temp_str.Replace(">", "&gt;");
+            Temp_str = Temp_str.Replace("<", "&lt;");
+            Temp_str = Temp_str.Replace("\n", "");
+            Temp_str = Temp_str.Replace("\r", "");
+            Temp_str = Temp_str.Replace("\t", "");
+            Temp_str = Temp_str.Replace("@", "&#64;");
             return Temp_str;
         }
 
@@ -90,23 +77,13 @@ namespace Tools
         static public string StrMid(string str, int x, int y)
         {
             if (string.IsNullOrEmpty(str))
-            {
                 return string.Empty;
-            }
             int sl = str.Length;
             if (sl < x)
-            {
                 return string.Empty;
-            }
             int jl = sl - x;
-            if (jl < y)
-            {
-                return str.Substring(x, jl);
-            }
-            else
-            {
-                return str.Substring(x, y);
-            }
+
+            return jl < y ? str.Substring(x, jl) : str.Substring(x, y);
         }
 
         /// <summary>
@@ -116,212 +93,56 @@ namespace Tools
         /// <returns></returns>
         public static int ByteLength(this string str)
         {
-            if (string.IsNullOrEmpty(str) == false)
-            {
-                byte[] bytes = Encoding.Default.GetBytes(str);
-                return bytes.Length;
-            }
-            else
-            {
+            if (string.IsNullOrEmpty(str))
                 return 0;
-            }
+            byte[] bytes = Encoding.Default.GetBytes(str);
+            return bytes.Length;
         }
 
+        /// <summary>
+        /// SQL检查(防止SQL注入)
+        /// </summary>
+        /// <param name="_str"></param>
+        /// <returns></returns>
         static public string SqlCheck(string _str)
         {
             if (string.IsNullOrEmpty(_str))
-            {
                 return string.Empty;
-            }
-            else
-            {
-                _str = _str.ToLower();
-                _str = _str.Replace("\"", "");
-                _str = _str.Replace("&", "");
-                _str = _str.Replace("'", "");
-                _str = _str.Replace(";", "");
-                _str = _str.Replace("%", "");
-                _str = _str.Replace("--", "");
-                _str = _str.Replace("()", "");
-                _str = _str.Replace("select ", "");
-                _str = _str.Replace("delete ", "");
-                _str = _str.Replace("update ", "");
-                _str = _str.Replace("from ", "");
-                _str = _str.Replace("where ", "");
-                _str = _str.Replace("=", "");
-                _str = _str.Replace("<", "");
-                _str = _str.Replace(">", "");
-                _str = _str.Replace("insert ", "");
-                _str = _str.Replace("and ", "");
-                _str = _str.Replace(")and( ", "");
-                _str = _str.Replace(" or ", "");
-                _str = _str.Replace(")or(", "");
-                _str = _str.Replace("asc(", "");
-                _str = _str.Replace("chr(", "");
-                _str = _str.Replace("mid(", "");
-                _str = _str.Replace("len(", "");
-                _str = _str.Replace(" desc", "");
-                _str = _str.Replace("xp_cmdshell", "");//0x
-                _str = _str.Replace("sysobjects", "");
-                _str = _str.Replace("0x", "０x");
-            }
 
+            _str = _str.ToLower();
+            _str = _str.Replace("\"", "");
+            _str = _str.Replace("&", "");
+            _str = _str.Replace("'", "");
+            _str = _str.Replace(";", "");
+            _str = _str.Replace("%", "");
+            _str = _str.Replace("--", "");
+            _str = _str.Replace("()", "");
+            _str = _str.Replace("select ", "");
+            _str = _str.Replace("delete ", "");
+            _str = _str.Replace("update ", "");
+            _str = _str.Replace("from ", "");
+            _str = _str.Replace("where ", "");
+            _str = _str.Replace("=", "");
+            _str = _str.Replace("<", "");
+            _str = _str.Replace(">", "");
+            _str = _str.Replace("insert ", "");
+            _str = _str.Replace("and ", "");
+            _str = _str.Replace(")and( ", "");
+            _str = _str.Replace(" or ", "");
+            _str = _str.Replace(")or(", "");
+            _str = _str.Replace("asc(", "");
+            _str = _str.Replace("chr(", "");
+            _str = _str.Replace("mid(", "");
+            _str = _str.Replace("len(", "");
+            _str = _str.Replace(" desc", "");
+            _str = _str.Replace("xp_cmdshell", "");//0x
+            _str = _str.Replace("sysobjects", "");
+            _str = _str.Replace("0x", "０x");
             return _str;
         }
 
 
-        //static public string RepHtml1(string Content)
-        //{
-        //    if (string.IsNullOrEmpty(Content))
-        //    {
-        //        return string.Empty;
-        //    }
-        //    else
-        //    {
 
-        //        Content = RepHtml2(Content);
-        //        Content = Regex.Replace(Content, @"<[^>]+>", @"", RegexOptions.IgnoreCase);
-        //        Content = Content.Replace(">", "&gt;");
-        //        Content = Content.Replace("<", "&lt;");
-        //        Content = Content.Replace(" ", " ");
-
-        //        Content = Content.Replace("&nbsp;", "");
-
-        //        return Content;
-        //    }
-        //}
-
-        //static public string RepToHtml(string Content)
-        //{
-        //    if (string.IsNullOrEmpty(Content))
-        //    {
-        //        return string.Empty;
-        //    }
-        //    else
-        //    {
-
-        //        Content = RepHtml2(Content);
-        //        //Content = Regex.Replace(Content, @"<[^>]+>", @"", RegexOptions.IgnoreCase);
-
-        //        //Content = Content.Replace("&quot;;", "");
-        //        Content = Content.Replace("<br/>;", "");
-        //        Content = Content.Replace("/>;", "");
-        //        Content = Content.Replace("&gt;", ">");
-        //        Content = Content.Replace("&lt;", "<");
-        //        Content = Content.Replace(" ", " ");
-        //        Content = Regex.Replace(Content, @"<[^>]+>", @"", RegexOptions.IgnoreCase);
-        //        Content = Content.Replace("&nbsp;", "");
-
-        //        return Content;
-        //    }
-        //}
-
-
-
-        //static public string RepHtml2(string Content)
-        //{
-        //    if (string.IsNullOrEmpty(Content) == false)
-        //    {
-        //        Content = AntiXss.GetSafeHtmlFragment(Content);
-        //        Content = Regex.Replace(Content, @"<form[\S\s ]*>[\S\s ]*</form *>", "", RegexOptions.IgnoreCase);
-        //        Content = Regex.Replace(Content, @"<input[\S\s ]*?>", "", RegexOptions.IgnoreCase);
-        //        Content = Regex.Replace(Content, @"<select[\S\s ]*>[\S\s ]*</select *>", "", RegexOptions.IgnoreCase);
-        //        Content = Regex.Replace(Content, @"<style[\S\s ]*>[\S\s ]*</style *>", "", RegexOptions.IgnoreCase);
-        //        Content = Regex.Replace(Content, @"<textarea[\S\s ]*>[\S\s ]*</textarea *>", "", RegexOptions.IgnoreCase);
-
-        //    }
-        //    return Content;
-        //}
-
-
-
-        static public string RepHtml3(string Content)
-        {
-            if (string.IsNullOrEmpty(Content))
-            {
-                return string.Empty;
-            }
-            else
-            {
-                Content = Regex.Replace(Content, @"<style[\S\s ]*>[\S\s ]*</style>", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"<script[\S\s ]*>[\S\s ]*</script *>", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"<iframe[\S\s ]*>[\S\s ]*</iframe *>", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"<iframe[\S\s ]*>", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"<frameset[\s\S]+</frameset *>", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"href *= *[\s\S]*script *:", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"on([a-zA-Z]*)([ ]*)\=", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"(?i)<Object([^>])*>(\w|\W)*</Object([^>])*>", "", RegexOptions.IgnoreCase);
-
-                return Content;
-            }
-        }
-        static public string RepHtml4(string Content)
-        {
-            if (string.IsNullOrEmpty(Content))
-            {
-                return string.Empty;
-            }
-            else
-            {
-                Content = Regex.Replace(Content, @"<style[\S\s ]*>[\S\s ]*</style>", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"<script[\S\s ]*>[\S\s ]*</script *>", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"<iframe[\S\s ]*>[\S\s ]*</iframe *>", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"<iframe[\S\s ]*>", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"<frameset[\s\S]+</frameset *>", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"href *= *[\s\S]*script *:", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"on([a-zA-Z]*)([ ]*)\=", "", RegexOptions.IgnoreCase);
-
-                return Content;
-            }
-        }
-
-        static public string RepHtml5(string Content)
-        {
-            if (string.IsNullOrEmpty(Content))
-            {
-                return string.Empty;
-            }
-            else
-            {
-                Content = Regex.Replace(Content, @"<style[\S\s ]*>[\S\s ]*</style>", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"<script[\S\s ]*>[\S\s ]*</script *>", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"<iframe[\S\s ]*>[\S\s ]*</iframe *>", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"<iframe[\S\s ]*>", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"<frameset[\s\S]+</frameset *>", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"href *= *[\s\S]*script *:", "", RegexOptions.IgnoreCase);
-                Content = Regex.Replace(Content, @"on([a-zA-Z]*)([ ]*)\=", "", RegexOptions.IgnoreCase);
-
-                Content = Regex.Replace(Content, @"irame", "iframe", RegexOptions.IgnoreCase);
-                return Content;
-            }
-        }
-
-        public static string Replxfs(string s1)
-        {
-
-            if (string.IsNullOrEmpty(s1))
-            {
-                return s1;
-            }
-            Regex regx1 = new Regex(@"电话[\s\S][\d]{1,10}", RegexOptions.IgnoreCase | RegexOptions.Multiline);
-            s1 = regx1.Replace(s1, "电话：*******");
-            regx1 = new Regex(@"qq[\s\S][\d]{1,10}", RegexOptions.IgnoreCase | RegexOptions.Multiline);
-            s1 = regx1.Replace(s1, "qq：*******");
-            regx1 = new Regex(@"手机[\s\S][\d]{1,10}", RegexOptions.IgnoreCase | RegexOptions.Multiline);
-            s1 = regx1.Replace(s1, "手机：*******");
-            regx1 = new Regex(@"号码[\s\S][\d]{1,10}", RegexOptions.IgnoreCase | RegexOptions.Multiline);
-            s1 = regx1.Replace(s1, "号码：*******");
-            regx1 = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", RegexOptions.IgnoreCase | RegexOptions.Multiline);
-            s1 = regx1.Replace(s1, "****@*********");
-            regx1 = new Regex(@"\d{3}[\s\S]\d{7,8}|\d{4}[\s\S]\d{7,8}", RegexOptions.IgnoreCase | RegexOptions.Multiline);
-            s1 = regx1.Replace(s1, "********");
-            s1 = s1.Replace("返点", "* *");
-            s1 = s1.Replace("热线", "* *");
-            s1 = s1.Replace("咨询", "* *");
-
-            return s1;
-
-        }
 
         //static public string StrEn2(string str)
         //{
@@ -415,9 +236,7 @@ namespace Tools
         static public string Extract_HZ(string HZ)
         {
             if (string.IsNullOrEmpty(HZ))
-            {
                 return string.Empty;
-            }
 
             byte[] ZW = new byte[2];
             long HZ_INT;
@@ -536,15 +355,10 @@ namespace Tools
             return ("");
         }
 
-
-
-
         static public string ASCII(string unicodeString)
         {
             if (string.IsNullOrEmpty(unicodeString))
-            {
                 return string.Empty;
-            }
 
             string str = "";
             if (unicodeString != null && unicodeString.Length > 0)
@@ -565,135 +379,32 @@ namespace Tools
             return str;
         }
 
-
-
-
+        /// <summary>
+        /// 是否有效用户名
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public static bool IsUserNameOk(string username)
         {
             Regex Reg = new Regex("^[a-zA-Z][a-zA-Z0-9_]{5,12}$");
             return Reg.IsMatch(username);
         }
 
+        /// <summary>
+        /// 是否有效密码
+        /// </summary>
+        /// <param name="pwd"></param>
+        /// <returns></returns>
         public static bool IsPwdOk(string pwd)
         {
             Regex Reg = new Regex("^([a-z]|[0-9]){5,11}$");
             return Reg.IsMatch(pwd);
         }
 
-
-
-        public static string DtToSON(DataTable dt)
-        {
-            if (dt != null && dt.Rows.Count > 0)
-            {
-
-            }
-            else
-            {
-                return "{\"Table\":}";
-            }
-            StringBuilder jsonBuilder = new StringBuilder();
-            jsonBuilder.Append("{\"");
-            jsonBuilder.Append(dt.TableName.ToString());
-            jsonBuilder.Append("\":[ ");
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                jsonBuilder.Append("{");
-                for (int j = 0; j < dt.Columns.Count; j++)
-                {
-                    jsonBuilder.Append("\"");
-                    jsonBuilder.Append(dt.Columns[j].ColumnName);
-                    jsonBuilder.Append("\":\"");
-                    jsonBuilder.Append(RepSon(dt.Rows[i][j].ToString()));
-                    jsonBuilder.Append("\",");
-                }
-                jsonBuilder.Remove(jsonBuilder.Length - 1, 1);
-                jsonBuilder.Append("},");
-            }
-            jsonBuilder.Remove(jsonBuilder.Length - 1, 1);
-            jsonBuilder.Append(" ]");
-            jsonBuilder.Append("}");
-            return jsonBuilder.ToString();
-        }
-
-        private static string RepSon(string s1)
-        {
-            if (string.IsNullOrEmpty(s1))
-            {
-                return "";
-            }
-            else
-            {
-                s1 = s1.Replace("\"", "");
-                s1 = s1.Replace("\r\n", "");
-                s1 = s1.Replace("  ", "");
-                s1 = s1.Replace("\\", "");
-                s1 = s1.Replace("{", "『");
-                s1 = s1.Replace("}", "』");
-                s1 = s1.Replace("'", "‘");
-                return s1;
-            }
-        }
-
         /// <summary>
-        /// 字符串转整数
+        /// 随机获取一个十位的，字符串包含字母或数字
         /// </summary>
-        /// <param name="val"></param>
         /// <returns></returns>
-        public static int StrToInt(string val)
-        {
-            int iRet;
-            if (int.TryParse(val, out iRet) == false)
-            {
-                iRet = 0;
-            }
-            return iRet;
-        }
-
-        public static int StrToInt(string val, int defaultval)
-        {
-            int iRet;
-            if (int.TryParse(val, out iRet) == false)
-            {
-                iRet = defaultval;
-            }
-            return iRet;
-        }
-
-        public static decimal StrToDecimal(string val)
-        {
-            decimal iRet;
-            if (decimal.TryParse(val, out iRet) == false)
-            {
-                iRet = 0;
-            }
-            return iRet;
-        }
-
-        public static decimal StrToDecimal(string val, decimal defaultval)
-        {
-            decimal iRet;
-            if (decimal.TryParse(val, out iRet) == false)
-            {
-                iRet = defaultval;
-            }
-            return iRet;
-        }
-
-
-
-        public static DateTime StrToTime(string val, DateTime defaultval)
-        {
-            DateTime dRet;
-            if (DateTime.TryParse(val, out dRet) == false)
-            {
-                dRet = defaultval;
-            }
-            return dRet;
-        }
-
-
-
         public static string GetBoundary()
         {
             string pattern = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -707,18 +418,6 @@ namespace Tools
             return boundaryBuilder.ToString();
         }
 
-
-        public static string Get_mindex_meta(string url)
-        {
-            StringBuilder s = new StringBuilder();
-            s.Append("<meta name=\"mobile-agent\" content=\"format=xhtml; url=http://m.efu.com.cn" + url + "\">\n");
-            s.Append("<meta name=\"mobile-agent\" content=\"format=html5; url=http://m.efu.com.cn" + url + "\">\n");
-            s.Append("<meta name=\"mobile-agent\" content=\"format=wml; url=http://m.efu.com.cn" + url + "\">");
-
-            return s.ToString();
-        }
-
-
         /// <summary>
         /// 判断是否是目录名称，并返回目录名称 目录只能是字母(大小写)数字和下划线(_)
         /// </summary>
@@ -727,9 +426,8 @@ namespace Tools
         public static string strToDirname(string str)
         {
             if (string.IsNullOrEmpty(str))
-            {
                 return string.Empty;
-            }
+
             Regex regex = new Regex(@"^[a-z0-9_]+$", RegexOptions.IgnoreCase);
             if (regex.IsMatch(str))
             {
@@ -741,87 +439,82 @@ namespace Tools
             }
         }
 
-        #region 格式化日期时间
-        /// <summary>
-        /// 格式化日期时间
-        /// </summary>
-        /// <param name="dateTime1">日期时间</param>
-        /// <param name="dateMode">显示模式</param>
-        /// <returns>0-9种模式的日期</returns>
-        public static string FormatDate(DateTime dateTime1, string dateMode)
-        {
-            switch (dateMode)
-            {
-                case "0":
-                    return dateTime1.ToString("yyyy-MM-dd");
-                case "02":
-                    return dateTime1.ToString("yy-MM-dd");
-                case "1":
-                    return dateTime1.ToString("yyyy-MM-dd HH:mm:ss");
-                case "2":
-                    return dateTime1.ToString("yyyy/MM/dd").Replace("-", "/");
-                case "3":
-                    return dateTime1.ToString("yyyy年MM月dd日");
-                case "4":
-                    return dateTime1.ToString("MM-dd");
-                case "5":
-                    return dateTime1.ToString("MM/dd");
-                case "6":
-                    return dateTime1.ToString("MM月dd日");
-                case "7":
-                    return dateTime1.ToString("yyyy-MM");
-                case "8":
-                    return dateTime1.ToString("yyyy/MM");
-                case "9":
-                    return dateTime1.ToString("yyyy年MM月");
-                default:
-                    return dateTime1.ToString();
-            }
-        }
-        #endregion
-
-        public static string ForMatTimes(string time)
-        {
-            try
-            {
-                string s = "";
-                DateTime startDate = DateTime.Parse(time.ToString());
-                DateTime endDate = DateTime.Now;
-                TimeSpan TS = new TimeSpan(endDate.Ticks - startDate.Ticks);
-                double j = Math.Round(TS.TotalMinutes);
-                if (j <= 1)
-                {
-                    s = "刚刚";
-                }
-                else if (j > 1 && j < 60)
-                {
-                    s = j + "分钟前";
-                }
-                else if (j >= 60 && j < 60 * 24)
-                {
-                    s = Math.Round(TS.TotalHours) + "小时前";
-                }
-                else if (j >= 60 * 24 && j < 60 * 24 * 30)
-                {
-                    s = Math.Round(TS.TotalDays) + "天前";
-                }
-                else if (j >= 60 * 24 * 30 && j < 60 * 24 * 30 * 12)
-                {
-                    s = Math.Floor(Math.Round(TS.TotalDays) / 30) + "月前";
-                }
-                else if (j >= 60 * 24 * 30 * 12)
-                {
-                    s = Math.Floor(Math.Round(TS.TotalDays) / (30 * 12)) + "年前";
-                }
-                return s;
-            }
-            catch (Exception)
-            {
-                return "";
-            }
-        }
-
         #region 清除HTML标记
+        /// <summary>
+        /// 删除所有HTML表单标签
+        /// </summary>
+        /// <param name="Content"></param>
+        /// <returns></returns>
+        static public string RepHtml2(string Content)
+        {
+            if (string.IsNullOrEmpty(Content))
+                return string.Empty;
+
+            Content = Regex.Replace(Content, @"<form[\S\s ]*>[\S\s ]*</form *>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"<input[\S\s ]*?>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"<select[\S\s ]*>[\S\s ]*</select *>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"<style[\S\s ]*>[\S\s ]*</style *>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"<textarea[\S\s ]*>[\S\s ]*</textarea *>", "", RegexOptions.IgnoreCase);
+            return Content;
+        }
+
+        /// <summary>
+        /// 删除HTML标签
+        /// </summary>
+        /// <param name="Content"></param>
+        /// <returns></returns>
+        static public string RepHtml3(string Content)
+        {
+            if (string.IsNullOrEmpty(Content))
+                return string.Empty;
+
+            Content = Regex.Replace(Content, @"<style[\S\s ]*>[\S\s ]*</style>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"<script[\S\s ]*>[\S\s ]*</script *>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"<iframe[\S\s ]*>[\S\s ]*</iframe *>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"<iframe[\S\s ]*>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"<frameset[\s\S]+</frameset *>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"href *= *[\s\S]*script *:", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"on([a-zA-Z]*)([ ]*)\=", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"(?i)<Object([^>])*>(\w|\W)*</Object([^>])*>", "", RegexOptions.IgnoreCase);
+            return Content;
+        }
+
+        /// <summary>
+        /// 删除HTML标签
+        /// </summary>
+        /// <param name="Content"></param>
+        /// <returns></returns>
+        static public string RepHtml4(string Content)
+        {
+            if (string.IsNullOrEmpty(Content))
+                return string.Empty;
+
+            Content = Regex.Replace(Content, @"<style[\S\s ]*>[\S\s ]*</style>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"<script[\S\s ]*>[\S\s ]*</script *>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"<iframe[\S\s ]*>[\S\s ]*</iframe *>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"<iframe[\S\s ]*>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"<frameset[\s\S]+</frameset *>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"href *= *[\s\S]*script *:", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"on([a-zA-Z]*)([ ]*)\=", "", RegexOptions.IgnoreCase);
+            return Content;
+        }
+
+        static public string RepHtml5(string Content)
+        {
+            if (string.IsNullOrEmpty(Content))
+                return string.Empty;
+
+            Content = Regex.Replace(Content, @"<style[\S\s ]*>[\S\s ]*</style>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"<script[\S\s ]*>[\S\s ]*</script *>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"<iframe[\S\s ]*>[\S\s ]*</iframe *>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"<iframe[\S\s ]*>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"<frameset[\s\S]+</frameset *>", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"href *= *[\s\S]*script *:", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"on([a-zA-Z]*)([ ]*)\=", "", RegexOptions.IgnoreCase);
+            Content = Regex.Replace(Content, @"irame", "iframe", RegexOptions.IgnoreCase);
+            return Content;
+        }
+
         ///<summary>   
         ///清除HTML标记   
         ///</summary>   
@@ -830,9 +523,8 @@ namespace Tools
         public static string NoHTML(string Htmlstring)
         {
             if (string.IsNullOrEmpty(Htmlstring))
-            {
                 return string.Empty;
-            }
+
             //删除脚本   
             Htmlstring = Regex.Replace(Htmlstring, @"<script[^>]*?>.*?</script>", "", RegexOptions.IgnoreCase);
 
@@ -889,8 +581,6 @@ namespace Tools
             return Htmlstring;
         }
 
-        #endregion
-
         /// <summary>
         /// 删除HTML标签
         /// </summary>
@@ -919,19 +609,17 @@ namespace Tools
             Htmlstring.Replace("\r\n", "");
             return Htmlstring;
         }
+        #endregion
 
-
+        /// <summary>
+        /// 验证手机号码是否正确
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
         public static bool Ifshouji(string v)
         {
             Regex mobilereg = new Regex("^(133|134|135|136|137|138|139|150|151|152|157|158|159|186|187|188|189)[0-9]{8,8}$");
-            if (mobilereg.IsMatch(v))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return (mobilereg.IsMatch(v));
         }
 
         /// <summary>
@@ -954,6 +642,7 @@ namespace Tools
             str = System.Web.HttpUtility.HtmlEncode(str);
             return str.Trim();
         }
+
         /// <summary>
         /// 文本框内容输出成html显示
         /// </summary>
@@ -962,9 +651,8 @@ namespace Tools
         public static string ToHtmlText(string str)
         {
             if (string.IsNullOrEmpty(str))
-            {
-                return "";
-            }
+                return string.Empty;
+
             StringBuilder builder1 = new StringBuilder();
             builder1.Append(str);
             builder1.Replace("&", "&amp;");

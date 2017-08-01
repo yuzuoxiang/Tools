@@ -11,7 +11,7 @@ namespace ToolsConsole
     {
         static void Main(string[] args)
         {
-            string str = "<a是";
+            string str = null;
             Test(str);
 
             Console.Read();
@@ -20,7 +20,8 @@ namespace ToolsConsole
         static void Test(string str)
         {
             //string result = Tools.StrClass.StrMid(str,5,7);
-            int result = str.ByteLength(); //Tools.StrClass.Length(str, 5, 7);
+            string result = Tools.StrClass.Anofollow(str); //Tools.StrClass.Length(str, 5, 7);
+            result.ToString();
         }
         
     }
