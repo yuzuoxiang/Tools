@@ -169,6 +169,7 @@ namespace Tools
             return _str;
         }
 
+
         //static public string RepHtml1(string Content)
         //{
         //    if (string.IsNullOrEmpty(Content))
