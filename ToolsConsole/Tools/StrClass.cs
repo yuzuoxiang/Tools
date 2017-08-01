@@ -164,16 +164,10 @@ namespace Tools
                 _str = _str.Replace("xp_cmdshell", "");//0x
                 _str = _str.Replace("sysobjects", "");
                 _str = _str.Replace("0x", "０x");
-
-
-
             }
 
             return _str;
-
         }
-
-
 
         //static public string RepHtml1(string Content)
         //{
