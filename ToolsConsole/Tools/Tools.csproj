@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\Newtonsoft.Json.dll</HintPath>
@@ -49,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Auth\AuthHelper.cs" />
     <Compile Include="CacheHelper.cs" />
     <Compile Include="Common\ChineseCharactersToPinyin.cs" />
     <Compile Include="Common\Common.cs" />
@@ -57,7 +62,9 @@
     <Compile Include="Common\ImageTools.cs" />
     <Compile Include="Common\JsonHelper.cs" />
     <Compile Include="FileClass.cs" />
-    <Compile Include="Request.cs" />
+    <Compile Include="Log4netExt\IWebLog.cs" />
+    <Compile Include="Log4netExt\WebLogHelper.cs" />
+    <Compile Include="Log4netExt\WebLogImpl.cs" />
     <Compile Include="StringCheck.cs" />
     <Compile Include="Common\VerifyImage.cs" />
     <Compile Include="Log.cs" />
@@ -65,6 +72,11 @@
     <Compile Include="QueryString.cs" />
     <Compile Include="StrClass.cs" />
     <Compile Include="StringExtension.cs" />
+    <Compile Include="Tool\Log.cs" />
+    <Compile Include="Tool\LogHelper.cs" />
+    <Compile Include="Tool\PathHandle.cs" />
+    <Compile Include="Utility\CheckClient.cs" />
+    <Compile Include="WebHelper\WebApiHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -78,6 +90,7 @@
     <Content Include="bin\Debug\Tools.pdb" />
     <Content Include="bin\Debug\Tools.vshost.exe" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
