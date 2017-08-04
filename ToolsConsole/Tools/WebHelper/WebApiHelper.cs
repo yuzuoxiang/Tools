@@ -170,7 +170,7 @@ namespace Tools.WebHelper
                     streamReader = new StreamReader(streamReceive, Encoding.UTF8);
                     strResult = streamReader.ReadToEnd();
                 }
-            }
+            } 
             catch (WebException ex)
             {
                 if (ex.Response != null)
