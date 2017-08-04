@@ -110,7 +110,7 @@ namespace Tools
         /// <returns>是否合法的bool值。</returns>
         public static bool IsNumberId(string _value)
         {
-            return StringCheck.IsIntegerByPositive(_value);
+            return Common.StringCheck.IsIntegerByPositive(_value);
         }
         #endregion
 

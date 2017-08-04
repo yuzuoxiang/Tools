@@ -60,21 +60,37 @@
     <Compile Include="Common\Des.cs" />
     <Compile Include="Common\ExportExcel.cs" />
     <Compile Include="Common\ImageTools.cs" />
-    <Compile Include="Common\JsonHelper.cs" />
-    <Compile Include="FileClass.cs" />
+    <Compile Include="Json\Json.cs" />
+    <Compile Include="Tool\CookieHelper.cs" />
+    <Compile Include="Tool\EncryptionHelper.cs" />
+    <Compile Include="Tool\JsonHelper.cs" />
+    <Compile Include="Common\StringProcess.cs" />
+    <Compile Include="Config\Setting.cs" />
+    <Compile Include="Config\SettingsCollection.cs" />
+    <Compile Include="Config\SiteOption.cs" />
+    <Compile Include="Config\SiteOptionCollection.cs" />
+    <Compile Include="Config\UploadConfig.cs" />
+    <Compile Include="Config\UploadProvice.cs" />
+    <Compile Include="Http\HttpHelper.cs" />
     <Compile Include="Log4netExt\IWebLog.cs" />
     <Compile Include="Log4netExt\WebLogHelper.cs" />
     <Compile Include="Log4netExt\WebLogImpl.cs" />
-    <Compile Include="StringCheck.cs" />
-    <Compile Include="Common\VerifyImage.cs" />
+    <Compile Include="Common\StringCheck.cs" />
+    <Compile Include="Tool\VerifyImage.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryString.cs" />
     <Compile Include="StrClass.cs" />
     <Compile Include="StringExtension.cs" />
+    <Compile Include="Tool\DataTableHelper.cs" />
+    <Compile Include="Tool\FileHelper.cs" />
+    <Compile Include="Tool\ImageTools.cs" />
     <Compile Include="Tool\Log.cs" />
     <Compile Include="Tool\LogHelper.cs" />
     <Compile Include="Tool\PathHandle.cs" />
+    <Compile Include="Tool\SendMail.cs" />
+    <Compile Include="Tool\UploadFile.cs" />
+    <Compile Include="Tool\XMLHelper.cs" />
     <Compile Include="Utility\CheckClient.cs" />
     <Compile Include="WebHelper\WebApiHelper.cs" />
   </ItemGroup>
@@ -90,7 +106,9 @@
     <Content Include="bin\Debug\Tools.pdb" />
     <Content Include="bin\Debug\Tools.vshost.exe" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Usual\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

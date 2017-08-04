@@ -7,7 +7,7 @@ using System.Data.Common;
 using System.Reflection;
 using System.Text;
 
-namespace Tools.Common
+namespace Tools.Tool
 {
     public class JsonHelper
     {
@@ -24,6 +24,16 @@ namespace Tools.Common
 
             string json = "{\"total\":\"" + records + "\",\"rows\":" + DataTaableToJson(dt) + "}";
             return json;
+        }
+
+        public static List<T> Deserialize<T>(string obj)
+        {
+            return JsonConvert.DeserializeObject<List<T>>(obj);
+        }
+
+        public static T DeserializeModel<T>(string obj)
+        {
+            return JsonConvert.DeserializeObject<T>(obj);
         }
 
         /// <summary>
@@ -47,6 +57,60 @@ namespace Tools.Common
             foreach (DataColumn item in dt.Columns)
             {
                 item.ColumnName = item.ColumnName.ToLower();
+            }
+        }
+
+        /// <summary>
+        /// Datable转JSON
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public static string DtToSON(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count < 1)
+            {
+                return "{\"Table\":}";
+            }
+
+            StringBuilder jsonBuilder = new StringBuilder();
+            jsonBuilder.Append("{\"");
+            jsonBuilder.Append(dt.TableName.ToString());
+            jsonBuilder.Append("\":[ ");
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                jsonBuilder.Append("{");
+                for (int j = 0; j < dt.Columns.Count; j++)
+                {
+                    jsonBuilder.Append("\"");
+                    jsonBuilder.Append(dt.Columns[j].ColumnName);
+                    jsonBuilder.Append("\":\"");
+                    jsonBuilder.Append(RepSon(dt.Rows[i][j].ToString()));
+                    jsonBuilder.Append("\",");
+                }
+                jsonBuilder.Remove(jsonBuilder.Length - 1, 1);
+                jsonBuilder.Append("},");
+            }
+            jsonBuilder.Remove(jsonBuilder.Length - 1, 1);
+            jsonBuilder.Append(" ]");
+            jsonBuilder.Append("}");
+            return jsonBuilder.ToString();
+        }
+        private static string RepSon(string s1)
+        {
+            if (string.IsNullOrEmpty(s1))
+            {
+                return "";
+            }
+            else
+            {
+                s1 = s1.Replace("\"", "");
+                s1 = s1.Replace("\r\n", "");
+                s1 = s1.Replace("  ", "");
+                s1 = s1.Replace("\\", "");
+                s1 = s1.Replace("{", "『");
+                s1 = s1.Replace("}", "』");
+                s1 = s1.Replace("'", "‘");
+                return s1;
             }
         }
 
@@ -120,6 +184,8 @@ namespace Tools.Common
             object obj = list[0];
             return ListToJson<T>(list, obj.GetType().Name);
         }
+
+        
 
         /// <summary>
         /// List转换成Json 

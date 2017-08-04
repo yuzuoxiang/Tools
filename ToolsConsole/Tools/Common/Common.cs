@@ -19,59 +19,27 @@ namespace Tools.Common
         }
 
         /// <summary>
-        /// Datable转JSON
+        /// 格式化文件质量,传入K
         /// </summary>
-        /// <param name="dt"></param>
+        /// <param name="filesize"></param>
         /// <returns></returns>
-        public static string DtToSON(DataTable dt)
+        public static string FormatFileSize(float filesize)
         {
-            if (dt == null || dt.Rows.Count < 1)
+            float filesizeFloat = filesize / 1024;
+            if (filesizeFloat < 1024)
             {
-                return "{\"Table\":}";
-            }
-
-            StringBuilder jsonBuilder = new StringBuilder();
-            jsonBuilder.Append("{\"");
-            jsonBuilder.Append(dt.TableName.ToString());
-            jsonBuilder.Append("\":[ ");
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                jsonBuilder.Append("{");
-                for (int j = 0; j < dt.Columns.Count; j++)
-                {
-                    jsonBuilder.Append("\"");
-                    jsonBuilder.Append(dt.Columns[j].ColumnName);
-                    jsonBuilder.Append("\":\"");
-                    jsonBuilder.Append(RepSon(dt.Rows[i][j].ToString()));
-                    jsonBuilder.Append("\",");
-                }
-                jsonBuilder.Remove(jsonBuilder.Length - 1, 1);
-                jsonBuilder.Append("},");
-            }
-            jsonBuilder.Remove(jsonBuilder.Length - 1, 1);
-            jsonBuilder.Append(" ]");
-            jsonBuilder.Append("}");
-            return jsonBuilder.ToString();
-        }
-
-        private static string RepSon(string s1)
-        {
-            if (string.IsNullOrEmpty(s1))
-            {
-                return "";
+                return Math.Ceiling(filesizeFloat) + "K";
             }
             else
             {
-                s1 = s1.Replace("\"", "");
-                s1 = s1.Replace("\r\n", "");
-                s1 = s1.Replace("  ", "");
-                s1 = s1.Replace("\\", "");
-                s1 = s1.Replace("{", "『");
-                s1 = s1.Replace("}", "』");
-                s1 = s1.Replace("'", "‘");
-                return s1;
+                filesizeFloat = filesizeFloat / 1024;
+                return Math.Round(filesizeFloat, 2) + "M";
             }
         }
+
+        
+
+        
 
         /// <summary>
         /// 日期格式化
@@ -119,6 +87,59 @@ namespace Tools.Common
             }
         }
 
+        #region 获取随机数
+
+
+        /// <summary>
+        /// 获得一个17位时间随机数
+        /// </summary>
+        /// <returns>返回随机数</returns>
+        public static string GetDataRandom()
+        {
+            return System.DateTime.Now.ToString("yyyyMMddHHmmssfff");
+        }
+
+
+        /// <summary>
+        /// 获得一个9位时间随机数(小时)
+        /// </summary>
+        /// <returns>返回随机数</returns>
+        public static string GetDataShortRandom()
+        {
+            return System.DateTime.Now.ToString("HHmmssfff");
+        }
+
+
+
+        /// <summary>
+        /// 获取随即数.a-z,0-9
+        /// </summary>
+        /// <param name="len">长度</param>
+        /// <returns></returns>
+        public static string GetRadmonString(int len)
+        {
+            Random random = new Random();
+            var _chars = new char[36];
+            for (int i = 65; i <= 90; i++)
+            {
+                _chars[i - 65] = (char)i;
+            }
+            for (int i = 48; i < 58; i++)
+            {
+
+                _chars[i - 22] = (char)(i);
+
+            }
+            string str = string.Empty;
+            for (int i = 0; i < len; i++)
+            {
+                str += _chars[random.Next(0, 35)];
+            }
+            return str;
+        }
+
+        #endregion
+
         #region 加密
         /// <summary>
         /// 获取MD5加密字符串
@@ -139,6 +160,11 @@ namespace Tools.Common
             return "00000000000000000000000000000000";
         }
 
+        /// <summary>
+        /// Des加密
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         static public string StrEn(string str)
         {
             if (str == null || str.Length == 0)
@@ -151,6 +177,11 @@ namespace Tools.Common
             }
         }
 
+        /// <summary>
+        /// Des解密
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         static public string StrDe(string str)
         {
 

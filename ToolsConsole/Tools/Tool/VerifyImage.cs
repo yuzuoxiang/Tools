@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Security.Cryptography;
 
-namespace Tools.Common
+namespace Tools.Tool
 {
     /// <summary>
     /// 验证码图片类
