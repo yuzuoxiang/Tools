@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,8 @@ namespace ToolsConsole
 
         static void Test(string str)
         {
+            var a = new ObservableCollection<int>();
+
             //string result = Tools.StrClass.StrMid(str,5,7);
             string result = Tools.Common.ChineseCharactersToPinyin.GetFirst("黄开始考试德克士里");
             result.ToString();

@@ -16,7 +16,7 @@ namespace Tools
         {
             get
             {
-                _logpath = ConfigurationManager.AppSettings["logpath"];
+                _logpath = HttpContext.Current.Request.PhysicalApplicationPath + "logs"; //ConfigurationManager.AppSettings["logpath"];
                 if (string.IsNullOrEmpty(_logpath))
                 {
                     return "";
