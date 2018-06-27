@@ -61,7 +61,7 @@ namespace Utils
         /// <summary>
         /// 构造函数
         /// </summary>
-        /// <param name="host"></param>
+        /// <param name="host">获取或设置用于 SMTP 事务的主机的名称或 IP 地址。</param>
         /// <param name="username">邮件账号</param>
         /// <param name="password">密码</param>
         public MailSmtp(string host, string username, string password)
@@ -72,13 +72,9 @@ namespace Utils
             this._isHtml = true;
             this._encoding = Encoding.UTF8;
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-            {
                 this._smtp.UseDefaultCredentials = false;
-            }
             else
-            {
                 this._smtp.Credentials = new NetworkCredential(username, password);
-            }
         }
 
         /// <summary>
@@ -113,7 +109,6 @@ namespace Utils
             {
                 throw new ArgumentNullException("MailSmtp.Send.to");
             }
-
             if (to.Any(oit => !Regex.IsMatch(oit + "", mailReg)))
             {
                 this.Result = "收件人地址不合法";
@@ -194,3 +189,20 @@ namespace Utils
         public string Result { get; private set; }
     }
 }
+
+//用法
+//声名对象
+//MailSmtp ms = new MailSmtp("smtp.qq.com","xxx","xx");
+
+//可选参数
+//ms.SetCC("xxxx@qq.com");//抄送可以多个
+//ms.SetBC("xxx@qq.com");//暗送可以多个
+//ms.SetIsHtml(true);//默认:true
+//ms.SetEncoding(System.Text.Encoding.UTF8);//设置格式 默认utf-8
+//ms.SetIsSSL(true);//是否ssl加密 默认为false
+
+//调用函数
+//bool isSuccess = ms.Send("xx@qq.com", "test", "xxxxqq.com", "哈哈", "哈哈");
+
+//获取返回值
+//var result=ms.Result
