@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Tools;
+using System.Threading.Tasks; 
 
 namespace ToolsConsole
 {
@@ -23,8 +22,6 @@ namespace ToolsConsole
             var a = new ObservableCollection<int>();
 
             //string result = Tools.StrClass.StrMid(str,5,7);
-            string result = Tools.Common.ChineseCharactersToPinyin.GetFirst("黄开始考试德克士里");
-            result.ToString();
         }
         
     }

@@ -3,6 +3,9 @@ using System.Web;
 
 namespace Logs.Log4netExt
 {
+    /// <summary>
+    /// 使用开源日志库
+    /// </summary>
     public class LogHelper
     {
         /// <summary>
@@ -143,6 +146,9 @@ namespace Logs.Log4netExt
         /// <returns></returns>
         public static string GetNowPage()
         {
+            if (HttpContext.Current == null)
+                return "0.0.0.0";
+
             return HttpContext.Current.Request.Url.ToString();
         }
         #endregion

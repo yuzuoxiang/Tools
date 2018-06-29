@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Utils
 {
@@ -151,7 +150,14 @@ namespace Utils
         /// <returns></returns>
         public string MD5(string source)
         {
-            return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(source, "MD5");
+            MD5CryptoServiceProvider md5Hasher = new MD5CryptoServiceProvider();
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(source));
+            StringBuilder sBuilder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            return sBuilder.ToString();
         }
 
         #region 私有函数
