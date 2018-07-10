@@ -118,18 +118,18 @@ namespace Utils
 
 //用法
 //PerformanceTest p = new PerformanceTest();
-//    p.SetCount(10000*100);//循环次数(默认:1)
-//    p.SetIsMultithread(false);//是否启动多线程测试 (默认:false)
-//    p.Execute(
-//    i =>
-//    {
-//        Response.Write(i);
-//        //
-//    },
-//    message =>
-//    {
-//        //输出总共运行时间
-//        Response.Write(message);   //总共执行时间：1.02206秒
-//    }
-//    );
-//   var resultList = p.GetChartSource()
+//p.SetCount(10000*100);//循环次数(默认:1)
+//p.SetIsMultithread(false);//是否启动多线程测试 (默认:false)
+//p.Execute(
+//i =>
+//{
+//    Response.Write(i);
+//    //
+//},
+//message =>
+//{
+//    //输出总共运行时间
+//    Response.Write(message);   //总共执行时间：1.02206秒
+//}
+//);
+//var resultList = p.GetChartSource()

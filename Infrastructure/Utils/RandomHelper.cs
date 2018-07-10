@@ -242,7 +242,6 @@ namespace Utils
 //根据样式生成："?"代表一个字符，"#"代表一个一位数字，"*"代表一个字符串或一个一位数字
 //var x3=RandomSugar.GetRandStringByPattern(@"##??*");
 
-
 //获取指定长度的纯字母随机字符串
 //var x4 = RandomSugar.GetRandWord(5);
 
