@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 namespace Utils
 {
     /// <summary>
-    /// 枚举扩展函数
+    /// ** 描述：枚举扩展函数
+    /// ** 创始时间：2015-6-30
+    /// ** 修改时间：-
+    /// ** 作者：sunkaixuan
     /// </summary>
     public static class EnumExtenions
     {

@@ -42,8 +42,8 @@
     <Reference Include="ServiceStack.Text, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
       <HintPath>..\packages\ServiceStack.Text.5.1.0\lib\net45\ServiceStack.Text.dll</HintPath>
     </Reference>
-    <Reference Include="SqlSugar, Version=4.6.4.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\sqlSugar.4.6.4.9\lib\SqlSugar.dll</HintPath>
+    <Reference Include="SqlSugar, Version=4.6.4.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\OA - 副本\packages\sqlSugar.4.6.4.8\lib\SqlSugar.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -57,15 +57,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbContext.cs" />
+    <Compile Include="DbSet.cs" />
     <Compile Include="Extensions\DataCache\HttpRuntimeCache.cs" />
     <Compile Include="Extensions\DataCache\RedisCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SugarBase.cs" />
+    <Compile Include="Extensions\SqlSugarClientExtisons.cs" />
+    <Compile Include="SugarCommon.cs" />
     <Compile Include="SugarDao.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\OA - 副本\Logs\Logs.csproj">
+      <Project>{7d0feed4-db75-4b17-a6f2-1066049d76af}</Project>
+      <Name>Logs</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

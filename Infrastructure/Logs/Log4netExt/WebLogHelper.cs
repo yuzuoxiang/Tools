@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Logs.Log4netExt
 {
-    class WebLogHelper
+    public class WebLogHelper
     {
         #region Static Member Variables
 

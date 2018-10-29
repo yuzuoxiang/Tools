@@ -35,7 +35,7 @@
       <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SqlSugar, Version=4.6.4.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\sqlSugar.4.6.4.9\lib\SqlSugar.dll</HintPath>
+      <HintPath>..\..\packages\sqlSugar.4.6.4.9\lib\SqlSugar.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -83,9 +83,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\Logs\Logs.csproj">
+      <Project>{7d0feed4-db75-4b17-a6f2-1066049d76af}</Project>
+      <Name>Logs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SqlSugarTool\SqlSugarTool.csproj">
       <Project>{67a74fdf-fdd7-495b-9607-ac70e72fbf8f}</Project>
       <Name>SqlSugarTool</Name>

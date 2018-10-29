@@ -20,7 +20,7 @@ namespace Logs
         {
             get
             {
-                return HttpContext.Current != null
+                return (HttpContext.Current != null)
                 //WebForm时的路径
                 ? HttpContext.Current.Request.PhysicalApplicationPath + "/logs"
                 //WinForm时的路径

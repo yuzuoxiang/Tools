@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SqlSugarTool.Extensions.DataCache
 {
-    public class RedisCache: ICacheService
+    public class RedisCache : ICacheService
     {
         ServiceStackRedis service = null;
         public RedisCache(string host, int port, string password, int expirySeconds, long db)

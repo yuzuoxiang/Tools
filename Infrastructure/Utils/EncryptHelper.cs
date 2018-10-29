@@ -55,8 +55,6 @@ namespace Utils
             return _instance;
         }
 
-
-
         /// <summary>
         /// 加密方法
         /// </summary>

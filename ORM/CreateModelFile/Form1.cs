@@ -48,6 +48,8 @@ namespace CreateModelFile
                 var db = SugarDao.GetInstance(dbName);
                 string[] tabs = models.Split(',');
 
+                //Logs.Log.Debug($"开始生成");
+                //db.Ado.GetDataTable("select * from AdminLoginLog");
                 db.DbFirst.Where(tabs).CreateClassFile(path, nameSpace);
                 MessageBox.Show("生成成功！");
             }

@@ -10,7 +10,7 @@ using System.Web.Caching;
 
 namespace SqlSugarTool.Extensions.DataCache
 {
-    public class HttpRuntimeCache: ICacheService
+    public class HttpRuntimeCache : ICacheService
     {
         public void Add<V>(string key, V value)
         {

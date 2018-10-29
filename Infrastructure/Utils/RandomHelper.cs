@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace Utils
 {
+    /// <summary>
+    /// ** 描述：根据条件生成随机字符串
+    /// ** 创始时间：2015-5-30
+    /// ** 修改时间：-
+    /// ** 作者：sunkaixuan
+    /// </summary>
     public class RandomHelper
     {
 

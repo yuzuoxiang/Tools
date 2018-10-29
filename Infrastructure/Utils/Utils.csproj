@@ -43,10 +43,12 @@
   <ItemGroup>
     <Compile Include="EncryptHelper.cs" />
     <Compile Include="EnumExtenions.cs" />
+    <Compile Include="IsWhatExtenions.cs" />
     <Compile Include="MailSmtp.cs" />
     <Compile Include="PerformanceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomHelper.cs" />
+    <Compile Include="SessionManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
