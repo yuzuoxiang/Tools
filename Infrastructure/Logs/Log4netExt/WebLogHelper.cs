@@ -1,6 +1,7 @@
 ﻿using log4net.Core;
 using System;
 using System.Reflection;
+using log4net;
 
 namespace Logs.Log4netExt
 {
@@ -11,7 +12,7 @@ namespace Logs.Log4netExt
         /// <summary>
         /// The wrapper map to use to hold the <see cref="WebLogImpl"/> objects
         /// </summary>
-        private static readonly WrapperMap s_wrapperMap = new WrapperMap(new WrapperCreationHandler(WrapperCreationHandler));
+        private static readonly WrapperMap SWrapperMap = new WrapperMap(WrapperCreationHandler);
 
         #endregion
 
@@ -228,7 +229,7 @@ namespace Logs.Log4netExt
         /// <returns>the wrapper for the logger specified</returns>
         private static IWebLog WrapLogger(ILogger logger)
         {
-            return (IWebLog)s_wrapperMap.GetWrapper(logger);
+            return (IWebLog)SWrapperMap.GetWrapper(logger);
         }
 
         /// <summary>

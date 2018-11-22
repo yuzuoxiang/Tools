@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Web;
+using Logs.Log4netExt;
 
-namespace Logs.Log4netExt
+namespace Logs
 {
     /// <summary>
     /// 使用开源日志库
@@ -14,14 +15,15 @@ namespace Logs.Log4netExt
         /// </summary>
         /// <param name="t"></param>
         /// <param name="ex"></param>
+        /// <param name="msg"></param>
         /// <param name="loginId"></param>
         /// <param name="loginUserName"></param>
         public static void WriteError(Exception ex, Type t, string msg = "", int loginId = 0, string loginUserName = "")
         {
-            string Ip = GetIP();
-            string RequestUrl = GetNowPage();
-            IWebLog WebLog = WebLogHelper.GetLogger(t);
-            WebLog.Error(Ip, RequestUrl, msg, ex, loginId, loginUserName);
+            var ip = GetIp();
+            var requestUrl = GetNowPage();
+            var webLog = WebLogHelper.GetLogger(t);
+            webLog.Error(ip, requestUrl, msg, ex, loginId, loginUserName);
         }
 
         /// <summary>
@@ -34,26 +36,25 @@ namespace Logs.Log4netExt
         /// <param name="loginUserName"></param>
         public static void WriteError(Exception ex, string msg = "", string type = "loginfo", int loginId = 0, string loginUserName = "")
         {
-            string Ip = GetIP();
-            string RequestUrl = GetNowPage();
-            IWebLog WebLog = WebLogHelper.GetLogger(type);
-            WebLog.Error(Ip, RequestUrl, msg, ex, loginId, loginUserName);
+            var ip = GetIp();
+            var requestUrl = GetNowPage();
+            var webLog = WebLogHelper.GetLogger(type);
+            webLog.Error(ip, requestUrl, msg, ex, loginId, loginUserName);
         }
 
         /// <summary>
         /// 记录完整错误信息
         /// </summary>
-        /// <param name="ex"></param>
         /// <param name="msg"></param>
         /// <param name="type"></param>
         /// <param name="loginId"></param>
         /// <param name="loginUserName"></param>
         public static void WriteError(string msg = "", string type = "loginfo", int loginId = 0, string loginUserName = "")
         {
-            string Ip = GetIP();
-            string RequestUrl = GetNowPage();
-            IWebLog WebLog = WebLogHelper.GetLogger(type);
-            WebLog.Error(Ip, RequestUrl, msg, loginId, loginUserName);
+            var ip = GetIp();
+            var requestUrl = GetNowPage();
+            var webLog = WebLogHelper.GetLogger(type);
+            webLog.Error(ip, requestUrl, msg, loginId, loginUserName);
         }
 
         /// <summary>
@@ -61,28 +62,30 @@ namespace Logs.Log4netExt
         /// </summary>
         /// <param name="ex"></param>
         /// <param name="msg"></param>
+        /// <param name="type"></param>
         /// <param name="loginId"></param>
         /// <param name="loginUserName"></param>
         public static void WriteWarn(Exception ex, string msg = "", string type = "loginfo", int loginId = 0, string loginUserName = "")
         {
-            string Ip = GetIP();
-            string RequestUrl = GetNowPage();
-            IWebLog WebLog = WebLogHelper.GetLogger(type);
-            WebLog.Warn(Ip, RequestUrl, msg, ex, loginId, loginUserName);
+            var ip = GetIp();
+            var requestUrl = GetNowPage();
+            var webLog = WebLogHelper.GetLogger(type);
+            webLog.Warn(ip, requestUrl, msg, ex, loginId, loginUserName);
         }
 
         /// <summary>
         /// 记录警告信息
         /// </summary>
         /// <param name="msg"></param>
+        /// <param name="type"></param>
         /// <param name="loginId"></param>
         /// <param name="loginUserName"></param>
         public static void WriteWarn(string msg = "", string type = "loginfo", int loginId = 0, string loginUserName = "")
         {
-            string Ip = GetIP();
-            string RequestUrl = GetNowPage();
-            IWebLog WebLog = WebLogHelper.GetLogger(type);
-            WebLog.Warn(Ip, RequestUrl, msg, loginId, loginUserName);
+            var ip = GetIp();
+            var requestUrl = GetNowPage();
+            var webLog = WebLogHelper.GetLogger(type);
+            webLog.Warn(ip, requestUrl, msg, loginId, loginUserName);
         }
 
         /// <summary>
@@ -90,14 +93,15 @@ namespace Logs.Log4netExt
         /// </summary>
         /// <param name="ex"></param>
         /// <param name="msg"></param>
+        /// <param name="type"></param>
         /// <param name="loginId"></param>
         /// <param name="loginUserName"></param>
         public static void WriteInfo(Exception ex, string msg = "", string type = "loginfo", int loginId = 0, string loginUserName = "")
         {
-            string Ip = GetIP();
-            string RequestUrl = GetNowPage();
-            IWebLog WebLog = WebLogHelper.GetLogger(type);
-            WebLog.Info(Ip, RequestUrl, msg, ex, loginId, loginUserName);
+            var ip = GetIp();
+            var requestUrl = GetNowPage();
+            var webLog = WebLogHelper.GetLogger(type);
+            webLog.Info(ip, requestUrl, msg, ex, loginId, loginUserName);
         }
 
         /// <summary>
@@ -109,10 +113,10 @@ namespace Logs.Log4netExt
         /// <param name="loginUserName"></param>
         public static void WriteInfo(string info, string type = "loginfo", int loginId = 0, string loginUserName = "")
         {
-            string Ip = GetIP();
-            string RequestUrl = GetNowPage();
-            IWebLog WebLog = WebLogHelper.GetLogger(type);
-            WebLog.Info(Ip, RequestUrl, info, loginId, loginUserName);
+            var ip = GetIp();
+            var requestUrl = GetNowPage();
+            var webLog = WebLogHelper.GetLogger(type);
+            webLog.Info(ip, requestUrl, info, loginId, loginUserName);
         }
 
         #region 辅助方法
@@ -120,7 +124,7 @@ namespace Logs.Log4netExt
         /// 获取客户端IP地址  
         /// </summary>  
         /// <returns></returns>  
-        private static string GetIP()
+        private static string GetIp()
         {
             if (HttpContext.Current == null)
                 return "0.0.0.0";

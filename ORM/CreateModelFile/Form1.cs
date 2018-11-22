@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
 using SqlSugarTool;
@@ -23,8 +16,8 @@ namespace CreateModelFile
 
         private void Init()
         {
-            string exportPath = ConfigurationManager.AppSettings["path"];
-            string nameSpace = ConfigurationManager.AppSettings["nameSpace"];
+            var exportPath = ConfigurationManager.AppSettings["path"];
+            var nameSpace = ConfigurationManager.AppSettings["nameSpace"];
 
             txtExportPath.Text = exportPath;
             txtNameSpace.Text = nameSpace;
@@ -41,17 +34,17 @@ namespace CreateModelFile
             {
                 if (Validate(models, nameSpace, dbName, path) != "")
                 {
-                    MessageBox.Show("参数不能为空！");
+                    MessageBox.Show(@"参数不能为空！");
                     return;
                 }
 
-                var db = SugarDao.GetInstance(dbName);
-                string[] tabs = models.Split(',');
+                var db = SugarDao.GetInstance(ConfigurationManager.ConnectionStrings[dbName].ConnectionString);
+                var tabs = models.Split(',');
 
                 //Logs.Log.Debug($"开始生成");
                 //db.Ado.GetDataTable("select * from AdminLoginLog");
                 db.DbFirst.Where(tabs).CreateClassFile(path, nameSpace);
-                MessageBox.Show("生成成功！");
+                MessageBox.Show(@"生成成功！");
             }
             catch (Exception ex)
             {
@@ -67,9 +60,9 @@ namespace CreateModelFile
         /// <param name="dbName"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        private string Validate(string models, string nameSpace, string dbName, string path)
+        private static string Validate(string models, string nameSpace, string dbName, string path)
         {
-            string msg = "";
+            var msg = "";
 
             if (string.IsNullOrWhiteSpace(models))
                 msg = "模型名称不能为空";

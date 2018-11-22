@@ -1,15 +1,14 @@
-﻿using log4net.Core;
-using Logs.Log4netExt;
-using System;
+﻿using System;
+using log4net.Core;
 
-namespace Logs
+namespace Logs.Log4netExt
 {
     public class WebLogImpl : LogImpl, IWebLog
     {
         /// <summary>
         /// The fully qualified name of this declaring type not the type of any subclass.
         /// </summary>
-        private readonly static Type ThisDeclaringType = typeof(WebLogImpl);
+        private static readonly Type ThisDeclaringType = typeof(WebLogImpl);
 
         public WebLogImpl(ILogger logger)
             : base(logger)
@@ -18,76 +17,68 @@ namespace Logs
 
         #region Implementation of IWebLog
 
-        public void Info(string clientIP, string requestUrl, object message, int loginId = 0, string loginUserName = "")
+        public void Info(string clientIp, string requestUrl, object message, int loginId = 0, string loginUserName = "")
         {
-            Info(clientIP, requestUrl, message, null, loginId, loginUserName);
+            Info(clientIp, requestUrl, message, null, loginId, loginUserName);
         }
 
-        public void Info(string clientIP, string requestUrl, object message, System.Exception t, int loginId = 0, string loginUserName = "")
+        public void Info(string clientIp, string requestUrl, object message, Exception t, int loginId = 0, string loginUserName = "")
         {
-            if (this.IsInfoEnabled)
-            {
-                LoggingEvent loggingEvent = new LoggingEvent(ThisDeclaringType, Logger.Repository, Logger.Name, Level.Info, message, t);
-                loggingEvent.Properties["clientIP"] = clientIP;
-                loggingEvent.Properties["requestUrl"] = requestUrl;
-                loggingEvent.Properties["loginUserId"] = loginId;
-                loggingEvent.Properties["loginUserName"] = loginUserName;
-                Logger.Log(loggingEvent);
-            }
+            if (!IsInfoEnabled) return;
+            var loggingEvent = new LoggingEvent(ThisDeclaringType, Logger.Repository, Logger.Name, Level.Info, message, t);
+            loggingEvent.Properties["clientIP"] = clientIp;
+            loggingEvent.Properties["requestUrl"] = requestUrl;
+            loggingEvent.Properties["loginUserId"] = loginId;
+            loggingEvent.Properties["loginUserName"] = loginUserName;
+            Logger.Log(loggingEvent);
         }
 
-        public void Warn(string clientIP, string requestUrl, object message, int loginId = 0, string loginUserName = "")
+        public void Warn(string clientIp, string requestUrl, object message, int loginId = 0, string loginUserName = "")
         {
-            Warn(clientIP, requestUrl, message, null, loginId, loginUserName);
+            Warn(clientIp, requestUrl, message, null, loginId, loginUserName);
         }
 
-        public void Warn(string clientIP, string requestUrl, object message, System.Exception t, int loginId = 0, string loginUserName = "")
+        public void Warn(string clientIp, string requestUrl, object message, Exception t, int loginId = 0, string loginUserName = "")
         {
-            if (this.IsWarnEnabled)
-            {
-                LoggingEvent loggingEvent = new LoggingEvent(ThisDeclaringType, Logger.Repository, Logger.Name, Level.Warn, message, t);
-                loggingEvent.Properties["clientIP"] = clientIP;
-                loggingEvent.Properties["requestUrl"] = requestUrl;
-                loggingEvent.Properties["loginUserId"] = loginId;
-                loggingEvent.Properties["loginUserName"] = loginUserName;
-                Logger.Log(loggingEvent);
-            }
+            if (!IsWarnEnabled) return;
+            var loggingEvent = new LoggingEvent(ThisDeclaringType, Logger.Repository, Logger.Name, Level.Warn, message, t);
+            loggingEvent.Properties["clientIP"] = clientIp;
+            loggingEvent.Properties["requestUrl"] = requestUrl;
+            loggingEvent.Properties["loginUserId"] = loginId;
+            loggingEvent.Properties["loginUserName"] = loginUserName;
+            Logger.Log(loggingEvent);
         }
 
-        public void Error(string clientIP, string requestUrl, object message, int loginId = 0, string loginUserName = "")
+        public void Error(string clientIp, string requestUrl, object message, int loginId = 0, string loginUserName = "")
         {
-            Error(clientIP, requestUrl, message, null, loginId, loginUserName);
+            Error(clientIp, requestUrl, message, null, loginId, loginUserName);
         }
 
-        public void Error(string clientIP, string requestUrl, object message, System.Exception t, int loginId = 0, string loginUserName = "")
+        public void Error(string clientIp, string requestUrl, object message, Exception t, int loginId = 0, string loginUserName = "")
         {
-            if (this.IsErrorEnabled)
-            {
-                LoggingEvent loggingEvent = new LoggingEvent(ThisDeclaringType, Logger.Repository, Logger.Name, Level.Error, message, t);
-                loggingEvent.Properties["clientIP"] = clientIP;
-                loggingEvent.Properties["requestUrl"] = requestUrl;
-                loggingEvent.Properties["loginUserId"] = loginId;
-                loggingEvent.Properties["loginUserName"] = loginUserName;
-                Logger.Log(loggingEvent);
-            }
+            if (!IsErrorEnabled) return;
+            var loggingEvent = new LoggingEvent(ThisDeclaringType, Logger.Repository, Logger.Name, Level.Error, message, t);
+            loggingEvent.Properties["clientIP"] = clientIp;
+            loggingEvent.Properties["requestUrl"] = requestUrl;
+            loggingEvent.Properties["loginUserId"] = loginId;
+            loggingEvent.Properties["loginUserName"] = loginUserName;
+            Logger.Log(loggingEvent);
         }
 
-        public void Fatal(string clientIP, string requestUrl, object message, int loginId = 0, string loginUserName = "")
+        public void Fatal(string clientIp, string requestUrl, object message, int loginId = 0, string loginUserName = "")
         {
-            Fatal(clientIP, requestUrl, null, loginId, loginUserName);
+            Fatal(clientIp, requestUrl, message, null, loginId, loginUserName);
         }
 
-        public void Fatal(string clientIP, string requestUrl, object message, System.Exception t, int loginId = 0, string loginUserName = "")
+        public void Fatal(string clientIp, string requestUrl, object message, Exception t, int loginId = 0, string loginUserName = "")
         {
-            if (this.IsFatalEnabled)
-            {
-                LoggingEvent loggingEvent = new LoggingEvent(ThisDeclaringType, Logger.Repository, Logger.Name, Level.Fatal, message, t);
-                loggingEvent.Properties["clientIP"] = clientIP;
-                loggingEvent.Properties["requestUrl"] = requestUrl;
-                loggingEvent.Properties["loginUserId"] = loginId;
-                loggingEvent.Properties["loginUserName"] = loginUserName;
-                Logger.Log(loggingEvent);
-            }
+            if (!IsFatalEnabled) return;
+            var loggingEvent = new LoggingEvent(ThisDeclaringType, Logger.Repository, Logger.Name, Level.Fatal, message, t);
+            loggingEvent.Properties["clientIP"] = clientIp;
+            loggingEvent.Properties["requestUrl"] = requestUrl;
+            loggingEvent.Properties["loginUserId"] = loginId;
+            loggingEvent.Properties["loginUserName"] = loginUserName;
+            Logger.Log(loggingEvent);
         }
 
         #endregion Implementation of IWebLog

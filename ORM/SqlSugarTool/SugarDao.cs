@@ -8,12 +8,14 @@ namespace SqlSugarTool
 {
     public class SugarDao
     {
-        private static bool IsDebug
+        private const string ParamName = "SqlSugar的连接字符串不能为空";
+
+        private static bool IsDebug => (ConfigurationManager.AppSettings["IsDebug"] ?? "False") == "Ture";
+      
+
+        public static string GetConfigurationManager(string key)
         {
-            get
-            {
-                return (ConfigurationManager.AppSettings["IsDebug"].ToString() == "Ture");
-            }
+            return ConfigurationManager.ConnectionStrings[key].ConnectionString;
         }
 
         /// <summary>
@@ -21,12 +23,13 @@ namespace SqlSugarTool
         /// </summary>
         /// <param name="conn">连接名称</param>
         /// <param name="dbType">数据库类型</param>
-        /// <param name="AutoCloseConnection">是否自动释放数据库</param>
+        /// <param name="shardSameThread"></param>
+        /// <param name="autoCloseConnection"></param>
         /// <returns></returns>
         public static SqlSugarClient GetInstance(string conn = "", DbType dbType = DbType.SqlServer, bool shardSameThread = false, bool autoCloseConnection = true)
         {
             if (string.IsNullOrEmpty(conn))
-                throw new ArgumentNullException("SqlSugar的连接字符串不能为空");
+                throw new ArgumentNullException(ParamName);
 
             var db = new SqlSugarClient(new ConnectionConfig()
             {

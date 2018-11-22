@@ -7,12 +7,11 @@ namespace SqlSugarTool
     {
         public DbContext(string dbName)
         {
-            _dbName = dbName;
-
-            Db = SugarDao.GetInstance(connectionString);
+            DbName = dbName;
+            Db = SugarDao.GetInstance(ConnectionString);
         }
 
-        private static string _dbName { get; set; }
+        private static string DbName { get; set; }
 
         public SqlSugarClient Db;
 
@@ -34,14 +33,8 @@ namespace SqlSugarTool
         /// <summary>
         /// 数据库连接属性
         /// </summary>
-        private static string connectionString
-        {
-            get
-            {
-                return GetConfigurationManager(_dbName);
-            }
-        }
-        
-        public DbSet<T> ModelDb { get { return new DbSet<T>(Db); } }
+        private static string ConnectionString => GetConfigurationManager(DbName);
+
+        public DbSet<T> ModelDb => new DbSet<T>(Db);
     }
 }
